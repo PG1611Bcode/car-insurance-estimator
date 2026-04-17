@@ -1,0 +1,40 @@
+flowchart TD
+    %% Level 2 DFD for "Damage Image Assessment" (Process 2.0 - /analyze-claim)
+    
+    User[Car Owner]
+    
+    P1((2.1 \n Ingest HTTP Form \n & Decode Image))
+    P2((2.2 \n ResNet-50 \n Tensor Transformation))
+    P3((2.3 \n ResNet-50 \n Inference))
+    P4((2.4 \n YOLOv8 \n Inference))
+    P5((2.5 \n Thresholding & \n Bounding Box Filter))
+    P6((2.6 \n Incident Severity \n Heuristic Mapping))
+    P7((2.7 \n XGBoost \n Scaler & Estimation))
+    P8((2.8 \n Assemble Final \n JSON Payload))
+    
+    D1[(ResNet saved_model.pth)]
+    D2[(YOLO yolo_damage_best.pt)]
+    D3[(XGBoost model_artifacts.pkl)]
+    
+    User -->|"Multipart Form \n (Image File, Severity)"| P1
+    
+    P1 -->|"PIL Image \n Object"| P2
+    P1 -->|"NumPy Array \n Image"| P4
+    P1 -->|"Incident Severity \n String"| P6
+    
+    P2 -->|"Normalized Tensor \n (3x224x224)"| P3
+    P3 <-->|"Load CNN Weights"| D1
+    P3 -->|"Class Scores, \n Top-1 Class, Confidence"| P6
+    P3 -->|"ResNet Metrics"| P8
+    
+    P4 <-->|"Load Object Weights"| D2
+    P4 -->|"Raw Class Probs \n & Coordinate Data"| P5
+    P5 -->|"Filtered YOLO \n Detections (>0.05)"| P8
+    
+    P6 -->|"Severity Key \n (minor, major, etc.)"| P7
+    P6 -->|"Severity Key"| P8
+    
+    P7 <-->|"Load Pickled Scaler/Model"| D3
+    P7 -->|"Raw USD Cost \n & INR Converted"| P8
+    
+    P8 -->|"Aggregated JSON \n Result"| User

@@ -1,0 +1,39 @@
+flowchart LR
+    %% Use Case Diagram
+    
+    %% Actors
+    Guest(Guest User)
+    AuthUser(Authenticated Car Owner)
+    System(AI Inference System)
+    
+    %% Use Cases
+    subgraph Car Insurance Automation System
+        UC_ViewHome((View Landing Page))
+        UC_Register((Create Account))
+        UC_Login((Sign In))
+        UC_ScanDamage((Upload Vehicle Image for Damage Scan))
+        UC_PredictClaim((Fill Manual Claim details to Predict Cost))
+        UC_FindGarage((Locate Nearby Garages))
+        UC_DownloadReport((Download Claim PDF Report))
+        UC_Inference((Run ResNet and YOLO inference))
+        UC_Estimator((Run XGBoost Cost Estimation))
+    end
+    
+    %% Associations
+    Guest --- UC_ViewHome
+    Guest --- UC_Register
+    Guest --- UC_Login
+    
+    AuthUser --- UC_ViewHome
+    AuthUser --- UC_ScanDamage
+    AuthUser --- UC_PredictClaim
+    AuthUser --- UC_FindGarage
+    AuthUser --- UC_DownloadReport
+    
+    UC_ScanDamage --- System
+    UC_PredictClaim --- System
+    System --- UC_Inference
+    System --- UC_Estimator
+    
+    %% Inheritance
+    AuthUser -.->|Inherits capabilities of| Guest

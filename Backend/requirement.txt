@@ -1,0 +1,16 @@
+ipykernel
+notebook
+numpy
+pandas
+lxml
+html5lib
+beautifulsoup4
+matplotlib
+seaborn
+flask
+memory_profiler
+streamlit
+scikit-learn
+statsmodels
+xgboost
+torchvision

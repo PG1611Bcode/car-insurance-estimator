@@ -1,0 +1,14 @@
+flowchart LR
+    %% Level 0 DFD (Context Diagram)
+    
+    User[Car Owner]
+    Maps[OpenStreetMap API]
+    Firebase[Firebase Auth API]
+    
+    System((Car Insurance \n Automation System))
+    
+    User -->|"Image Data, Claim Details, Auth Credentials"| System
+    System -->|"Damage Class, Bounding Boxes, Claim Estimates, PDF Report, Auth Token"| User
+    
+    System <-->|"Auth Verification Requests & Responses"| Firebase
+    System <-->|"Spatial Requests & Map Raster Tiles"| Maps

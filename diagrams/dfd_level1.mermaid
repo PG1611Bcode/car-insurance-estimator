@@ -1,0 +1,35 @@
+flowchart LR
+    %% Level 1 DFD
+    
+    User[Car Owner]
+    Firebase[Firebase Authentication]
+    Maps[OpenStreetMap]
+    
+    P1((1.0 \n User Authentication))
+    P2((2.0 \n Damage Image Assessment))
+    P3((3.0 \n Claim Cost Prediction))
+    P4((4.0 \n Garage Locator))
+    P5((5.0 \n PDF Report Generation))
+    
+    D1[(System ML Models & Scalers)]
+    
+    User -->|"Login/Register details"| P1
+    P1 <-->|"Verify Identity"| Firebase
+    P1 -->|"Auth Token"| User
+    
+    User -->|"Vehicle Image & Severity"| P2
+    P2 <-->|"Load ResNet/YOLO weights"| D1
+    P2 -->|"Damage Location, Box Detections, Est. Cost"| User
+    
+    User -->|"Policy & Incident Form Data"| P3
+    P3 <-->|"Load XGBoost Model"| D1
+    P3 -->|"Predicted Claim Value & Importance"| User
+    
+    User -->|"Map Interactions / Bounds"| P4
+    P4 <-->|"Tile requests / Geodata"| Maps
+    P4 -->|"Visual Garage Map"| User
+    
+    User -->|"Trigger PDF Export"| P5
+    P2 -->|"Damage Output Data"| P5
+    P3 -->|"Predicted Claim Data"| P5
+    P5 -->|"Generated PDF Report"| User

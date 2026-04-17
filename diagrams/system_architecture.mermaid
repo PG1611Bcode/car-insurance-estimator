@@ -1,0 +1,52 @@
+flowchart TD
+    User((Car Owner / Agent))
+    
+    subgraph Frontend[Frontend Application - React/Vite]
+        UI_Home[Home Interface]
+        UI_Scan[AI Damage Scan Module]
+        UI_Claim[Claim Predictor Module]
+        UI_Garage[Garage Finder Module]
+        UI_Auth[Authentication UI]
+        PDF_Gen[jsPDF Report Generator]
+        Service_API[Axios API Service]
+    end
+    
+    subgraph Backend[Backend API Server - FastAPI]
+        API_Routes[FastAPI Routes]
+        ResNet_Engine[ResNet-50 PyTorch Engine]
+        YOLO_Engine[YOLOv8 Ultralytics Engine]
+        XGB_Engine[XGBoost Predictor Engine]
+    end
+    
+    subgraph Storage[Data Stores]
+        Models[(Model Artifacts: .pth, .pt, .pkl)]
+    end
+    
+    subgraph External_Services[External APIs]
+        Firebase[(Firebase Auth Service)]
+        OSM[OpenStreetMap / Leaflet API]
+    end
+
+    User -->|Views/Interacts| UI_Home
+    User -->|Uploads Damage Photo| UI_Scan
+    User -->|Submits Claim Details| UI_Claim
+    User -->|Searches Map| UI_Garage
+    User -->|Downloads PDF| PDF_Gen
+    
+    UI_Auth <-->|REST/SDK: Login/Tokens| Firebase
+    UI_Garage <-->|REST: Map Tiles & GeoData| OSM
+    
+    UI_Scan -->|REST POST /analyze-claim: FormData Image| Service_API
+    UI_Claim -->|REST POST /predict-claim: JSON Form| Service_API
+    
+    Service_API -->|HTTP Requests| API_Routes
+    
+    API_Routes -->|Image tensor| ResNet_Engine
+    API_Routes -->|Image array| YOLO_Engine
+    API_Routes -->|Form features| XGB_Engine
+    
+    ResNet_Engine -->|Read weights| Models
+    YOLO_Engine -->|Read weights| Models
+    XGB_Engine -->|Read scaler & model| Models
+    
+    API_Routes -->|JSON Response: Class, Confidence, Costs| Service_API
