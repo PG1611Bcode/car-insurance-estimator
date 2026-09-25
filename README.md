@@ -1,6 +1,6 @@
 <div align="center">
 
-<img src="assets/logo.png" alt="AutoClaim AI Logo" width="120" />
+
 
 # 🚗 AutoClaim AI
 ### Intelligent Vehicle Damage Detection & Insurance Claim Estimator
