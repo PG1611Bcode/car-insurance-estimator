@@ -342,10 +342,6 @@ Distributed under the MIT License. See [`LICENSE`](LICENSE) for details.
 
 <div align="center">
 
-**Built for the NeenOpal AI/ML Internship Application**
-
-*Where computer vision meets claims automation.*
-
 [![LinkedIn](https://img.shields.io/badge/LinkedIn-Connect-0A66C2?style=flat-square&logo=linkedin)](https://linkedin.com/in/yourprofile)
 [![Portfolio](https://img.shields.io/badge/Portfolio-Visit-22C55E?style=flat-square)](https://yourportfolio.com)
 
