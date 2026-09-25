@@ -36,31 +36,6 @@ The core AI engine is a fine-tuned **ResNet-50 Convolutional Neural Network** th
 
 ---
 
-## 🏗️ System Architecture
-
-┌──────────────────────────────────────────────────────────────────────┐
-│ AutoClaim AI Platform │
-├─────────────────┬──────────────────────────┬─────────────────────────┤
-│ FRONTEND LAYER │ API GATEWAY LAYER │ ML INFERENCE LAYER │
-│ │ │ │
-│ React 18 SPA │ FastAPI (Python) │ ResNet-50 CNN │
-│ ┌───────────┐ │ ┌──────────────────┐ │ ┌─────────────────┐ │
-│ │ Image │ │ │ /predict │ │ │ Damage Detect. │ │
-│ │ Upload UI │──┼──▶│ /health │──▶│ │ Severity Class. │ │
-│ │ Report │ │ │ /report/{id} │ │ │ Localization │ │
-│ │ Viewer │◀─┼───│ │◀──┤ └────────┬────────┘ │
-│ └───────────┘ │ │ Pydantic Models │ │ │ │
-│ │ │ Async Endpoints │ │ ▼ │
-│ Axios · Tailwind│ │ CORS Middleware │ │ Pricing Engine │
-│ React Query │ └──────────────────┘ │ ┌─────────────────┐ │
-│ │ │ │ Classification │ │
-│ │ Uvicorn · Pydantic │ │ → Cost Lookup │ │
-│ │ python-multipart │ │ → Labor Rates │ │
-│ │ Pillow · NumPy │ │ → Line Items │ │
-│ │ │ └─────────────────┘ │
-│ │ │ PyTorch · Scikit-learn│
-└─────────────────┴──────────────────────────┴─────────────────────────┘
-
 
 ---
 
