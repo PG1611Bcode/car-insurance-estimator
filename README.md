@@ -1,8 +1,3 @@
----
-
-#### 2. Car Insurance Claim Estimator README
-This positions your early 2026 computer vision project as a full-stack, AI-driven product, highlighting the specific machine learning and frontend frameworks you used.
-
 ```markdown
 # AutoClaim AI: Intelligent Vehicle Damage & Claim Estimator
 
